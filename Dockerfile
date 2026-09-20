@@ -8,6 +8,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY server.py check_access.py ./
 COPY static ./static
 
-EXPOSE 8001
+EXPOSE 8053
 
-CMD ["python", "-m", "uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8001"]
+CMD ["python", "-m", "uvicorn", "server:app", "--host", "0.0.0.0", "--port", "8053"]

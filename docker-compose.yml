@@ -8,9 +8,9 @@ services:
       - path: .env
         required: false
     ports:
-      - "127.0.0.1:8001:8001"
+      - "127.0.0.1:8053:8053"
     healthcheck:
-      test: ["CMD", "python", "-c", "from urllib.request import urlopen; assert urlopen('http://127.0.0.1:8001/healthz', timeout=5).status == 200"]
+      test: ["CMD", "python", "-c", "from urllib.request import urlopen; assert urlopen('http://127.0.0.1:8053/healthz', timeout=5).status == 200"]
       interval: 20s
       timeout: 8s
       retries: 10

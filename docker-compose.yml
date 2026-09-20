@@ -5,7 +5,7 @@ services:
     container_name: qwen-livetranslate
     restart: unless-stopped
     env_file:
-      - path: .env
+      - path: .env.sample
         required: false
     ports:
       - "127.0.0.1:8001:8001"

@@ -209,6 +209,11 @@ async def index() -> FileResponse:
     return FileResponse(os.path.join(STATIC_DIR, "index.html"))
 
 
+@app.get("/healthz")
+async def healthz() -> dict[str, str]:
+    return {"status": "ok", "model": MODEL}
+
+
 def event_id(prefix: str) -> str:
     return f"{prefix}_{int(time.time() * 1000)}"
 
@@ -463,9 +468,9 @@ async def livetranslate(websocket: WebSocket) -> None:
 
     try:
         config = await read_config(websocket)
-        api_key = str(config.get("api_key", "")).strip()
+        api_key = str(config.get("api_key", "")).strip() or os.getenv("DASHSCOPE_API_KEY", "").strip()
         if not api_key:
-            raise ValueError("Enter a DashScope API key before starting.")
+            raise ValueError("Enter a DashScope API key before starting (or set DASHSCOPE_API_KEY on the server).")
 
         session, details = build_session(config)
         details["trace_id"] = f"lt_{int(time.time())}_{uuid.uuid4().hex[:8]}"

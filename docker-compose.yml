@@ -1,0 +1,16 @@
+services:
+  qwen-livetranslate:
+    build: .
+    image: qwen-livetranslate:latest
+    container_name: qwen-livetranslate
+    restart: unless-stopped
+    env_file:
+      - path: .env
+        required: false
+    ports:
+      - "127.0.0.1:8001:8001"
+    healthcheck:
+      test: ["CMD", "python", "-c", "from urllib.request import urlopen; assert urlopen('http://127.0.0.1:8001/healthz', timeout=5).status == 200"]
+      interval: 20s
+      timeout: 8s
+      retries: 10
